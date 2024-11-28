@@ -35,11 +35,12 @@
 │   │   ├── LanguageSwitch.astro
 │   │   ├── SearchBar.astro
 │   │   ├── SiteLogo.astro
-│   │   ├── ThemeToggle.astro
-│   │   └── Welcome.astro
+│   │   └── ThemeToggle.astro
+│   │
 │   │
 │   ├── content
-│   │   └── blog
+│   │   ├── blog
+│   │   └── config.ts
 │   │
 │   ├── layouts
 │   │   ├── BlogPostLayout.astro
