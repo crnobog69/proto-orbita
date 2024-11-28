@@ -1,48 +1,66 @@
-# Astro Starter Kit: Basics
+# <p align="center">🪐 | Прото Орбита</p>
 
-```sh
-npm create astro@latest -- --template basics
+<br>
+
+<div align="center">
+<p>
+<a href="https://github.com/crnobog69/proto-orbit/stargazers"><img src="https://img.shields.io/github/stars/crnobog69/proto-orbit?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=C9CBFF&labelColor=302D41" alt="stars"><a>&nbsp;&nbsp;
+<a href="https://github.com/crnobog69/proto-orbit/"><img src="https://img.shields.io/github/repo-size/crnobog69/proto-orbit?style=for-the-badge&logo=linux&logoColor=f9e2af&label=Size&labelColor=302D41&color=f9e2af" alt="REPO SIZE"></a>&nbsp;&nbsp;
+<a href="https://github.com/crnobog69/proto-orbit/commits/main/"><img src="https://img.shields.io/github/last-commit/crnobog69/proto-orbit?style=for-the-badge&logo=github&logoColor=eba0ac&label=Last%20Commit&labelColor=302D41&color=eba0ac" alt="Last Commit"></a>&nbsp;&nbsp;
+<a href="https://github.com/crnobog69/proto-orbit/LICENSE"><img src="https://img.shields.io/github/license/crnobog69/proto-orbit?style=for-the-badge&logo=&color=CBA6F7&logoColor=CBA6F7&labelColor=302D41" alt="LICENSE"></a>&nbsp;&nbsp;
+</p>
+</div>
+
+<br>
+
 ```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
+┌── .vscode
+│   ├── extensions.json
+│   └── launch.json
+│
+├── public
 │   └── favicon.svg
-├── src/
-│   ├── layouts/
+│
+├── src
+│   ├── assets
+│   │   ├── astro.svg
+│   │   └── background.svg
+│   │
+│   ├── components
+│   │   ├── BackToTop.astro
+│   │   ├── BlogPost.astro
+│   │   ├── BlogPostLayout.astro
+│   │   ├── CrnobogButton.astro
+│   │   ├── GitHubButton.astro
+│   │   ├── LanguageSwitch.astro
+│   │   ├── SearchBar.astro
+│   │   ├── SiteLogo.astro
+│   │   ├── ThemeToggle.astro
+│   │   └── Welcome.astro
+│   │
+│   ├── content
+│   │   └── blog
+│   │
+│   ├── layouts
+│   │   ├── BlogPostLayout.astro
 │   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   │
+│   └── pages
+│       └── blog
+│           └── index.astro
+│
+├── .directory
+├── .gitignore
+├── README.md
+├── astro.config.mjs
+├── bun.lockb
+├── color-pallete.txt
+├── config.ts
+├── package.json
+├── push.ps1
+├── push.sh
+├── tailwind.config.mjs
+└── tsconfig.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+#### <p align="center">🍂 Јесени господње 2024</p>
