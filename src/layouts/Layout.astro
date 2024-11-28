@@ -19,6 +19,22 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme');
+				}
+				return 'dark';
+			})();
+			
+			if (theme === 'light') {
+				document.documentElement.classList.remove('dark');
+				document.documentElement.classList.add('light');
+			} else {
+				document.documentElement.classList.remove('light');
+				document.documentElement.classList.add('dark');
+			}
+		</script>
 	</head>
 	<body>
 		<div class="space-background">
@@ -291,8 +307,15 @@ const { title } = Astro.props;
 		top: 0;
 		left: 0;
 		z-index: -1;
-		background: linear-gradient(45deg, #1e1e24 0%, #1a1a20 100%);
 		overflow: hidden;
+	}
+
+	:root.dark .space-background {
+		background: linear-gradient(45deg, #1e1e24 0%, #1a1a20 100%);
+	}
+
+	:root:not(.dark) .space-background {
+		background: linear-gradient(45deg, #f7ebe8 0%, #ffffff 100%);
 	}
 
 	.stars {
@@ -301,11 +324,20 @@ const { title } = Astro.props;
 		height: 200%;
 		left: -50%;
 		top: -50%;
+		background-size: 250px 250px;
+		animation: rotate 240s linear infinite;
+	}
+
+	:root.dark .stars {
 		background-image: 
 			radial-gradient(2px 2px at 25% 25%, rgba(255, 255, 255, 0.4), transparent),
 			radial-gradient(2px 2px at 75% 75%, rgba(255, 255, 255, 0.4), transparent);
-		background-size: 250px 250px;
-		animation: rotate 240s linear infinite;
+	}
+
+	:root:not(.dark) .stars {
+		background-image: 
+			radial-gradient(2px 2px at 25% 25%, rgba(30, 30, 36, 0.2), transparent),
+			radial-gradient(2px 2px at 75% 75%, rgba(30, 30, 36, 0.2), transparent);
 	}
 
 	.nebula {
@@ -314,11 +346,22 @@ const { title } = Astro.props;
 		height: 150%;
 		left: -25%;
 		top: -25%;
+		filter: blur(80px);
+		animation: nebula-drift 60s ease-in-out infinite alternate;
+	}
+
+	:root.dark .nebula {
 		background: 
 			radial-gradient(circle at 30% 50%, rgba(229, 75, 75, 0.15) 0%, transparent 50%),
 			radial-gradient(circle at 70% 50%, rgba(255, 169, 135, 0.15) 0%, transparent 50%);
-		filter: blur(80px);
-		animation: nebula-drift 60s ease-in-out infinite alternate;
+		opacity: 1;
+	}
+
+	:root:not(.dark) .nebula {
+		background: 
+			radial-gradient(circle at 30% 50%, rgba(229, 75, 75, 0.08) 0%, transparent 50%),
+			radial-gradient(circle at 70% 50%, rgba(255, 169, 135, 0.08) 0%, transparent 50%);
+		opacity: 0.5;
 	}
 
 	@keyframes rotate {
@@ -333,21 +376,10 @@ const { title } = Astro.props;
 	@keyframes nebula-drift {
 		0% {
 			transform: translate(-5%, -5%) scale(1.1);
-			opacity: 0.6;
 		}
 		100% {
 			transform: translate(5%, 5%) scale(0.9);
-			opacity: 0.4;
 		}
-	}
-
-	/* Adjust for dark/light modes */
-	:root.dark .space-background {
-		opacity: 1;
-	}
-
-	:root:not(.dark) .space-background {
-		opacity: 0.2;
 	}
 
 	/* Reduce motion if user prefers */
