@@ -1,10 +1,12 @@
 ---
-title: "1 | Проба"
-pubDate: "1900-01-01T00:00:00+01:00"
-excerpt: "Прбне проба"
+title: "2 | Entropy"
+pubDate: "2024-11-28T00:22:05+01:00"
+excerpt: "Проба покретања скрипте са `curl`"
 ---
 
 ## Entropy
+
+### Скрипта за чишћење система
 
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/crnobog69/dotfiles/refs/heads/main/scripts/entropy.sh" | bash
