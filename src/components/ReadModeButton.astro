@@ -1,0 +1,69 @@
+---
+---
+<button id="read-mode" class="read-mode-button" aria-label="Toggle read mode">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+    <path d="M2 2l7.586 7.586"></path>
+    <circle cx="11" cy="11" r="2"></circle>
+  </svg>
+</button>
+
+<style>
+  .read-mode-button {
+    border: 2px solid var(--border-color);
+    background: var(--card-bg);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .read-mode-button:hover {
+    background-color: var(--hover-bg);
+    transform: scale(1.05);
+  }
+
+  .read-mode-button:active {
+    transform: scale(0.95);
+  }
+
+  :global(.read-mode) .blog-post {
+    max-width: 65ch;
+    margin: 0 auto 1.5rem auto;
+  }
+
+  :global(.read-mode) .blog-post h2 {
+    font-size: 2rem;
+  }
+
+  :global(.read-mode) .blog-post p {
+    font-size: 1.2rem;
+    line-height: 1.75;
+  }
+
+  :global(.read-mode) .blog-post time {
+    font-size: 1rem;
+  }
+</style>
+
+<script>
+  const readModeButton = document.getElementById('read-mode');
+  const blogPosts = document.querySelector('.blog-posts');
+
+  readModeButton?.addEventListener('click', () => {
+    blogPosts?.classList.toggle('read-mode');
+    // Store the preference
+    const isReadMode = blogPosts?.classList.contains('read-mode');
+    localStorage.setItem('readMode', isReadMode ? 'true' : 'false');
+  });
+
+  // Restore preference on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedReadMode = localStorage.getItem('readMode');
+    if (savedReadMode === 'true') {
+      blogPosts?.classList.add('read-mode');
+    }
+  });
+</script> 
