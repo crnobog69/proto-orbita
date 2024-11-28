@@ -7,7 +7,6 @@ import CrnobogButton from '../components/CrnobogButton.astro';
 import BlogPost from '../components/BlogPost.astro';
 import SearchBar from '../components/SearchBar.astro';
 import SiteLogo from '../components/SiteLogo.astro';
-import ReadModeButton from '../components/ReadModeButton.astro';
 
 interface BlogPost {
   slug: string;
@@ -33,7 +32,6 @@ const sortedPosts = posts.sort((a, b) =>
                     <SiteLogo />
                 </div>
                 <div class="nav-buttons">
-                    <ReadModeButton />
                     <CrnobogButton />
                     <GitHubButton />
                     <ThemeToggle />

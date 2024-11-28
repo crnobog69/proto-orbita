@@ -24,7 +24,18 @@ function formatDateTime(dateStr: string) {
         <a href={`/blog/${slug}`}>{title}</a>
     </h2>
     <time datetime={date}>{formatDateTime(date)}</time>
-    <p>{excerpt}</p>
+    <div class="excerpt-container">
+        <p class="excerpt">{excerpt}</p>
+        <div class="read-more-container">
+            <a href={`/blog/${slug}`} class="read-more">
+                <span>Прочитај више</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </div>
 </article>
 
 <style>
@@ -57,8 +68,53 @@ function formatDateTime(dateStr: string) {
         margin-bottom: 1rem;
     }
 
-    p {
+    .excerpt-container {
+        position: relative;
+    }
+
+    .excerpt {
         margin: 0;
         line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
-</style> 
+
+    .read-more-container {
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 1rem;
+    }
+
+    .read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--imperial-red, #e54b4b);
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .read-more:hover {
+        transform: translateX(8px);
+    }
+
+    .read-more svg {
+        transition: transform 0.3s ease;
+    }
+
+    .read-more:hover svg {
+        transform: translateX(4px);
+    }
+
+    .link-hint {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+    }
+</style>
+ 
