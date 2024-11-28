@@ -8,8 +8,6 @@ excerpt: "Прбне проба"
 
 ## Proba 2
 
-# Proba
-
 ### Proba 3
 
 ```c
