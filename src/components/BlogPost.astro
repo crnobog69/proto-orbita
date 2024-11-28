@@ -8,8 +8,8 @@ interface Props {
 
 const { title, date, excerpt, slug } = Astro.props;
 
-function formatDateTime(dateString: string) {
-    const date = new Date(dateString);
+function formatDateTime(dateStr: string) {
+    const date = new Date(dateStr);
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
@@ -20,63 +20,45 @@ function formatDateTime(dateString: string) {
 ---
 
 <article class="blog-post">
-    <h2><a href={`/blog/${slug}`}>{title}</a></h2>
+    <h2>
+        <a href={`/blog/${slug}`}>{title}</a>
+    </h2>
     <time datetime={date}>{formatDateTime(date)}</time>
     <p>{excerpt}</p>
-    <a href={`/blog/${slug}`} class="read-more">Прочитај више →</a>
 </article>
 
 <style>
     .blog-post {
+        background-color: var(--card-bg);
         padding: 1.5rem;
         border-radius: 0.5rem;
-        background-color: var(--card-bg);
-        margin-bottom: 1.5rem;
         border: 2px solid var(--border-color);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .blog-post:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 20px rgba(229, 75, 75, 0.1);
     }
 
     h2 {
         margin: 0 0 0.5rem 0;
+        font-size: 1.8rem;
     }
 
-    h2 a {
+    a {
         color: var(--accent-color);
         text-decoration: none;
-        transition: color 0.2s;
     }
 
-    h2 a:hover {
-        color: var(--border-color);
+    a:hover {
+        text-decoration: underline;
     }
 
     time {
         color: var(--text-color);
         opacity: 0.7;
         font-size: 0.9rem;
+        display: block;
+        margin-bottom: 1rem;
     }
 
     p {
-        margin: 1rem 0;
-        line-height: 1.5;
-        color: var(--text-color);
-    }
-
-    .read-more {
-        display: inline-block;
-        color: var(--accent-color);
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.2s;
-    }
-
-    .read-more:hover {
-        color: var(--border-color);
-        transform: translateX(5px);
+        margin: 0;
+        line-height: 1.6;
     }
 </style> 

@@ -1,12 +1,14 @@
 ---
 title: "Проба"
-date: 2024-01-14
-excerpt: "Проба"
+pubDate: "1900-01-01T00:00:00+01:00"
+excerpt: "Прбне проба"
 ---
 
 # Proba
 
 ## Proba 2
+
+# Proba
 
 ### Proba 3
 

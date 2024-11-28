@@ -8,8 +8,19 @@ import BlogPost from '../components/BlogPost.astro';
 import SearchBar from '../components/SearchBar.astro';
 import SiteLogo from '../components/SiteLogo.astro';
 
+interface BlogPost {
+  slug: string;
+  data: {
+    title: string;
+    pubDate: string | Date;
+    excerpt: string;
+  };
+}
+
 const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const sortedPosts = posts.sort((a, b) => 
+  new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+);
 ---
 
 <Layout title="Прото Орбита">
@@ -34,7 +45,7 @@ const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.val
             {sortedPosts.map(post => (
                 <BlogPost 
                     title={post.data.title}
-                    date={post.data.date.toISOString()}
+                    date={new Date(post.data.pubDate).toISOString()}
                     excerpt={post.data.excerpt}
                     slug={post.slug}
                 />
