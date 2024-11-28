@@ -1,5 +1,4 @@
 ---
-import { getCurrentLanguage } from '../store/language';
 import BackToTop from '../components/BackToTop.astro';
 import '@fontsource/tourney/700.css';
 import '@fontsource/tourney/400.css';
@@ -9,7 +8,6 @@ interface Props {
 }
 
 const { title } = Astro.props;
-const currentLang = getCurrentLanguage();
 ---
 
 <!doctype html>
