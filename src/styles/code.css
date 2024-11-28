@@ -1,0 +1,44 @@
+/* Add styles for code block container */
+.code-block-container {
+  position: relative;
+  margin: 1rem 0;
+}
+
+/* Style for the pre element */
+.code-block-container pre {
+  overflow-x: auto;
+  padding: 1rem;
+  padding-top: 2.5rem; /* Make room for copy button */
+  border-radius: 0.5rem;
+  background: var(--code-bg);
+}
+
+/* Style for the copy button */
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.copy-button:hover {
+  background: var(--hover-bg);
+}
+
+.copy-button:active {
+  transform: scale(0.95);
+}
+
+/* Success state */
+.copy-button.copied {
+  background: var(--success-color);
+  color: white;
+} 

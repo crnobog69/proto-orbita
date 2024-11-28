@@ -1,0 +1,42 @@
+---
+interface Props {
+  code: string;
+  lang: string;
+}
+
+const { code, lang } = Astro.props;
+---
+
+<div class="code-block-container">
+  <button class="copy-button" aria-label="Copy code">
+    <span class="copy-text">Copy</span>
+  </button>
+  <pre><code class={`language-${lang}`}>{code}</code></pre>
+</div>
+
+<script>
+  const copyButtons = document.querySelectorAll('.copy-button');
+
+  copyButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const pre = button.nextElementSibling;
+      const code = pre?.textContent || '';
+      
+      try {
+        await navigator.clipboard.writeText(code);
+        const span = button.querySelector('.copy-text');
+        if (span) {
+          span.textContent = 'Copied!';
+          button.classList.add('copied');
+          
+          setTimeout(() => {
+            span.textContent = 'Copy';
+            button.classList.remove('copied');
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    });
+  });
+</script> 
