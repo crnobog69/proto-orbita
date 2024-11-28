@@ -1,0 +1,104 @@
+---
+---
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun-icon">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon-icon">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    border: 2px solid var(--border-color);
+    background: var(--card-bg);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+  }
+
+  .theme-toggle:hover {
+    background-color: var(--hover-bg);
+    transform: scale(1.05);
+  }
+
+  .theme-toggle:active {
+    transform: scale(0.95);
+  }
+
+  .sun-icon, .moon-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+
+  :global(.light) .sun-icon {
+    display: none;
+  }
+
+  :global(.dark) .moon-icon {
+    display: none;
+  }
+
+  .theme-toggle:hover .sun-icon,
+  .theme-toggle:hover .moon-icon {
+    transform: rotate(15deg);
+  }
+</style>
+
+<script>
+  function initTheme() {
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      return 'dark';
+    })();
+
+    function applyTheme(theme: string) {
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    // Apply initial theme
+    applyTheme(theme);
+
+    // Add click handler to toggle button
+    const handleToggleClick = () => {
+      const element = document.documentElement;
+      const isDark = element.classList.contains("dark");
+      const newTheme = isDark ? "light" : "dark";
+      applyTheme(newTheme);
+    }
+
+    const toggleButton = document.getElementById("theme-toggle");
+    if (toggleButton && !toggleButton.hasAttribute('data-initialized')) {
+      toggleButton.addEventListener("click", handleToggleClick);
+      toggleButton.setAttribute('data-initialized', 'true');
+    }
+  }
+
+  // Initialize when the DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTheme);
+  } else {
+    initTheme();
+  }
+</script> 

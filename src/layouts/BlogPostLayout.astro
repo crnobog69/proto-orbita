@@ -1,0 +1,172 @@
+---
+import Layout from './Layout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import GitHubButton from '../components/GitHubButton.astro';
+import CrnobogButton from '../components/CrnobogButton.astro';
+interface Props {
+  title: string;
+  date: Date;
+}
+
+const { title, date } = Astro.props;
+
+function formatDateTime(date: Date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${day}.${month}.${year}. ${hours}:${minutes}`;
+}
+---
+
+<Layout title={title}>
+  <header>
+    <nav>
+      <div class="nav-content">
+        <a href="/" class="home-link">← Назад</a>
+        <div class="nav-buttons">
+          <CrnobogButton />
+          <GitHubButton />
+          <ThemeToggle />
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article class="blog-post">
+      <h1>{title}</h1>
+      <time datetime={date.toISOString()}>{formatDateTime(date)}</time>
+      <div class="content">
+        <slot />
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  nav {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .home-link {
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .home-link:hover {
+    color: var(--accent-color);
+  }
+
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .blog-post {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--border-color);
+  }
+
+  h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: var(--accent-color);
+  }
+
+  time {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-size: 0.9rem;
+  }
+
+  .content {
+    margin-top: 2rem;
+    line-height: 1.6;
+  }
+
+  .content :global(h2) {
+    color: var(--accent-color);
+    margin-top: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .content :global(h3) {
+    color: var(--accent-color);
+    margin-top: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .content :global(p) {
+    margin: 1rem 0;
+  }
+
+  .content :global(ul),
+  .content :global(ol) {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .content :global(li) {
+    margin: 0.5rem 0;
+  }
+
+  .content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .content :global(blockquote) {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-color);
+    background-color: var(--hover-bg);
+    border-radius: 0.5rem;
+  }
+
+  .content :global(blockquote p) {
+    margin: 0;
+  }
+</style>
+
+<script>
+  // Add language badges to code blocks
+  document.querySelectorAll('pre').forEach(pre => {
+    const code = pre.querySelector('code');
+    if (code) {
+      const language = code.className.match(/language-(\w+)/)?.[1];
+      if (language) {
+        pre.setAttribute('data-language', language);
+      }
+    }
+  });
+</script> 

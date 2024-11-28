@@ -1,0 +1,137 @@
+---
+import { translate, getCurrentLanguage } from '../store/language';
+const currentLang = getCurrentLanguage();
+---
+
+<div class="language-dropdown">
+  <button class="language-button" aria-label="Select language">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21.54 15.18L13.12 2.3a2 2 0 0 0-3.6.06L.72 15.12a2 2 0 0 0 1.73 3h17.12a2 2 0 0 0 1.97-2.94z"></path>
+    </svg>
+    <span class="current-lang">{currentLang === 'en' ? 'English' : 'Српски'}</span>
+  </button>
+  <div class="dropdown-content">
+    <button class="language-option" data-lang="en">
+      English
+    </button>
+    <button class="language-option" data-lang="sr">
+      Српска ћирилица
+    </button>
+  </div>
+</div>
+
+<style>
+  .language-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .language-button {
+    border: 2px solid var(--border-color);
+    background: var(--card-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  .language-button:hover {
+    background-color: var(--hover-bg);
+  }
+
+  .language-button svg {
+    width: 1em;
+    height: 1em;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    min-width: 160px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .dropdown-content.show {
+    display: block;
+  }
+
+  .language-option {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+  }
+
+  .language-option:hover {
+    background-color: var(--hover-bg);
+  }
+
+  .language-option.active {
+    background-color: var(--hover-bg);
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  function initializeLanguageSwitch() {
+    const dropdown = document.querySelector('.language-dropdown');
+    const button = dropdown?.querySelector('.language-button');
+    const content = dropdown?.querySelector('.dropdown-content');
+    const options = dropdown?.querySelectorAll('.language-option');
+    const currentLangSpan = button?.querySelector('.current-lang');
+
+    // Toggle dropdown
+    button?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      content?.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      content?.classList.remove('show');
+    });
+
+    // Handle language selection
+    options?.forEach(option => {
+      option.addEventListener('click', () => {
+        const newLang = option.getAttribute('data-lang');
+        if (newLang) {
+          localStorage.setItem('language', newLang);
+          document.documentElement.lang = newLang;
+          
+          // Update the button text immediately
+          if (currentLangSpan) {
+            currentLangSpan.textContent = newLang === 'en' ? 'English' : 'Српски';
+          }
+          
+          // Reload the page to apply translations
+          window.location.reload();
+        }
+        content?.classList.remove('show');
+      });
+    });
+  }
+
+  // Initialize when the DOM is ready
+  document.addEventListener('DOMContentLoaded', initializeLanguageSwitch);
+  // Also initialize immediately in case the script runs after DOMContentLoaded
+  initializeLanguageSwitch();
+</script> 

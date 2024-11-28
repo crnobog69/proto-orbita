@@ -1,0 +1,81 @@
+---
+---
+<button id="back-to-top" class="back-to-top" aria-label="Врати на врх">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(1rem);
+    color: var(--text-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .back-to-top:hover {
+    background: var(--hover-bg);
+    transform: translateY(-3px);
+  }
+
+  .back-to-top:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .back-to-top {
+      bottom: 1rem;
+      right: 1rem;
+    }
+  }
+</style>
+
+<script>
+  const button = document.getElementById('back-to-top');
+  
+  function toggleBackToTop() {
+    if (window.scrollY > 300) {
+      button?.classList.add('visible');
+    } else {
+      button?.classList.remove('visible');
+    }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  // Show/hide button based on scroll position
+  window.addEventListener('scroll', toggleBackToTop);
+  
+  // Scroll to top when clicked
+  button?.addEventListener('click', scrollToTop);
+
+  // Initial check
+  toggleBackToTop();
+</script> 

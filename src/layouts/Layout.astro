@@ -1,22 +1,340 @@
+---
+import { getCurrentLanguage } from '../store/language';
+import BackToTop from '../components/BackToTop.astro';
+import '@fontsource/tourney/700.css';
+import '@fontsource/tourney/400.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+const currentLang = getCurrentLanguage();
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<meta name="description" content="My Blog" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme');
+				}
+				return 'dark';
+			})();
+			document.documentElement.classList.add(theme);
+		</script>
 	</head>
 	<body>
 		<slot />
+		<BackToTop />
 	</body>
 </html>
 
-<style>
-	html,
+<style is:global>
+	:root {
+		--background: #f7ebe8;
+		--text-color: #1e1e24;
+		--hover-bg: rgba(229, 75, 75, 0.1);
+		--card-bg: #fff;
+		--border-color: #ffa987;
+		--accent-color: #e54b4b;
+		--code-bg: #1a1b26;
+		--code-color: #f7ebe8;
+		--inline-code-bg: rgba(229, 75, 75, 0.1);
+		--inline-code-color: #e54b4b;
+		--copy-button-hover: #e54b4b;
+		--scrollbar-bg: transparent;
+		--scrollbar-thumb: rgba(229, 75, 75, 0.2);
+		--scrollbar-thumb-hover: rgba(229, 75, 75, 0.4);
+		--font-space: 'Tourney', sans-serif;
+		--badge-bg: var(--accent-color);
+		--badge-text: var(--background);
+		--copy-button-bg: var(--accent-color);
+		--copy-button-text: var(--background);
+	}
+
+	:root.dark {
+		--background: #1e1e24;
+		--text-color: #f7ebe8;
+		--hover-bg: rgba(229, 75, 75, 0.2);
+		--card-bg: #2a2a32;
+		--border-color: #e54b4b;
+		--accent-color: #ffa987;
+		--code-bg: #16161e;
+		--code-color: #ffffff;
+		--inline-code-bg: rgba(229, 75, 75, 0.3);
+		--inline-code-color: #ffa987;
+		--copy-button-hover: #e54b4b;
+		--scrollbar-thumb: rgba(229, 75, 75, 0.5);
+		--scrollbar-thumb-hover: rgba(229, 75, 75, 0.7);
+		--badge-bg: var(--accent-color);
+		--badge-text: var(--code-bg);
+		--copy-button-bg: var(--accent-color);
+		--copy-button-text: var(--code-bg);
+	}
+
+	/* Webkit scrollbar styles */
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+		background-color: var(--scrollbar-bg);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: var(--scrollbar-thumb);
+		border-radius: 10px;
+		border: 3px solid var(--scrollbar-bg);
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--scrollbar-thumb-hover);
+	}
+
+	/* Firefox scrollbar styles */
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+	}
+
+	html {
+		font-family: system-ui, sans-serif;
+		background: var(--background);
+		color: var(--text-color);
+	}
+
 	body {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		min-height: 100vh;
+		transition: background-color 0.3s, color 0.3s;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	a {
+		color: var(--accent-color);
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	a:hover {
+		color: var(--border-color);
+	}
+
+	/* Code block styles */
+	pre {
+		padding: 2.5rem 1.5rem 1.5rem;
+		border-radius: 0.5rem;
+		background-color: var(--code-bg);
+		color: var(--code-color);
+		overflow-x: auto;
+		border: 2px solid var(--border-color);
+		margin: 1.5rem 0;
+		position: relative;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	}
+
+	pre code {
+		font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+		line-height: 1.5;
+		padding: 0;
+		background: none;
+		color: inherit;
+		border-radius: 0;
+		border: none;
+	}
+
+	/* Copy button */
+	.copy-button {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		padding: 0.4rem 0.6rem;
+		background: var(--copy-button-bg);
+		border: none;
+		border-radius: 0.3rem;
+		color: var(--copy-button-text);
+		cursor: pointer;
+		font-size: 0.8rem;
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		transition: all 0.2s ease;
+		opacity: 0;
+		font-weight: 500;
+	}
+
+	pre:hover .copy-button {
+		opacity: 1;
+	}
+
+	.copy-button:hover {
+		transform: scale(1.05);
+		background: var(--border-color);
+	}
+
+	.copy-button:active {
+		transform: scale(0.95);
+	}
+
+	.copy-button svg {
+		width: 1em;
+		height: 1em;
+	}
+
+	.copy-button.copied {
+		background: var(--border-color);
+	}
+
+	/* Inline code styles */
+	:not(pre) > code {
+		background-color: var(--inline-code-bg);
+		color: var(--inline-code-color);
+		padding: 0.2em 0.4em;
+		border-radius: 0.3em;
+		font-size: 0.9em;
+		font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+	}
+
+	/* Language badge */
+	pre::before {
+		content: attr(data-language);
+		position: absolute;
+		top: 0;
+		left: 0;
+		color: var(--badge-text);
+		background-color: var(--badge-bg);
+		padding: 0.25rem 0.75rem;
+		font-size: 0.8rem;
+		border-bottom-right-radius: 0.5rem;
+		font-family: 'Tourney', sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+	}
+
+	/* Line numbers */
+	.line-number {
+		display: inline-block;
+		width: 1.5rem;
+		margin-right: 1rem;
+		color: var(--text-color);
+		opacity: 0.5;
+		user-select: none;
+	}
+
+	.site-title {
+		font-family: var(--font-space);
+		font-weight: 700;
+		letter-spacing: 0.15em;
+		font-size: 2.5rem;
+		text-transform: uppercase;
+		background: linear-gradient(
+			45deg,
+			var(--accent-color) 0%,
+			var(--border-color) 50%,
+			var(--accent-color) 100%
+		);
+		background-size: 200% auto;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		animation: gradient 3s ease infinite;
+		text-shadow: 
+			0 0 20px rgba(229, 75, 75, 0.2),
+			0 0 40px rgba(229, 75, 75, 0.1);
+		transform: skew(-5deg);
+	}
+
+	@keyframes gradient {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	/* Updated responsive breakpoints */
+	@media (max-width: 768px) {
+		.site-title {
+			font-size: 2rem;
+			letter-spacing: 0.1em;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.site-title {
+			font-size: 1.5rem;
+			letter-spacing: 0.08em;
+			transform: skew(-3deg);
+		}
+	}
+
+	/* Add an extra breakpoint for very small screens */
+	@media (max-width: 320px) {
+		.site-title {
+			font-size: 1.25rem;
+			letter-spacing: 0.05em;
+			transform: none;
+		}
 	}
 </style>
+
+<script>
+	// Add copy buttons to code blocks
+	document.querySelectorAll('pre').forEach(pre => {
+		// Create copy button
+		const copyButton = document.createElement('button');
+		copyButton.className = 'copy-button';
+		copyButton.innerHTML = `
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+				<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+			</svg>
+			<span>Copy</span>
+		`;
+
+		// Add click handler
+		copyButton.addEventListener('click', async () => {
+			const code = pre.querySelector('code');
+			if (code) {
+				await navigator.clipboard.writeText(code.innerText);
+				copyButton.classList.add('copied');
+				const span = copyButton.querySelector('span');
+				if (span) span.textContent = 'Copied!';
+				
+				// Reset button after 2 seconds
+				setTimeout(() => {
+					copyButton.classList.remove('copied');
+					if (span) span.textContent = 'Copy';
+				}, 2000);
+			}
+		});
+
+		// Add button to pre element
+		pre.appendChild(copyButton);
+	});
+
+	// Add language badges to code blocks
+	document.querySelectorAll('pre').forEach(pre => {
+		const code = pre.querySelector('code');
+		if (code) {
+			const language = code.className.match(/language-(\w+)/)?.[1];
+			if (language) {
+				pre.setAttribute('data-language', language);
+			}
+		}
+	});
+</script>

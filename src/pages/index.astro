@@ -1,11 +1,97 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import GitHubButton from '../components/GitHubButton.astro';
+import CrnobogButton from '../components/CrnobogButton.astro';
+import BlogPost from '../components/BlogPost.astro';
+import SearchBar from '../components/SearchBar.astro';
+import SiteLogo from '../components/SiteLogo.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Прото Орбита">
+    <header>
+        <nav>
+            <div class="nav-content">
+                <div class="site-branding">
+                    <h1 class="site-title">Прото Орбита</h1>
+                    <SiteLogo />
+                </div>
+                <div class="nav-buttons">
+                    <CrnobogButton />
+                    <GitHubButton />
+                    <ThemeToggle />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <SearchBar />
+        <section class="blog-posts">
+            {sortedPosts.map(post => (
+                <BlogPost 
+                    title={post.data.title}
+                    date={post.data.date.toISOString()}
+                    excerpt={post.data.excerpt}
+                    slug={post.slug}
+                />
+            ))}
+        </section>
+    </main>
 </Layout>
+
+<style>
+    header {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    nav {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem;
+    }
+
+    .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+    }
+
+    .site-branding {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .site-title {
+        margin: 0;
+    }
+
+    @media (max-width: 480px) {
+        .site-title {
+            display: none;
+        }
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    main {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .blog-posts {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+</style>

@@ -1,0 +1,67 @@
+---
+---
+<div class="search-container">
+    <input 
+        type="text" 
+        id="search" 
+        placeholder="Претражи блог..." 
+        class="search-input"
+    />
+</div>
+
+<style>
+    .search-container {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+        border: 2px solid var(--border-color);
+        border-radius: 0.5rem;
+        background: var(--card-bg);
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(229, 75, 75, 0.1);
+    }
+
+    .search-input::placeholder {
+        color: var(--text-color);
+        opacity: 0.6;
+    }
+</style>
+
+<script>
+    const searchInput = document.getElementById('search') as HTMLInputElement;
+    const blogPosts = document.querySelectorAll('.blog-post');
+
+    function searchPosts(query: string) {
+        const normalizedQuery = query.toLowerCase().trim();
+
+        blogPosts.forEach(post => {
+            const title = post.querySelector('h2')?.textContent?.toLowerCase() || '';
+            const excerpt = post.querySelector('p')?.textContent?.toLowerCase() || '';
+            const content = title + ' ' + excerpt;
+
+            if (content.includes(normalizedQuery) || normalizedQuery === '') {
+                post.classList.remove('hidden');
+                (post as HTMLElement).style.display = '';
+            } else {
+                post.classList.add('hidden');
+                (post as HTMLElement).style.display = 'none';
+            }
+        });
+    }
+
+    searchInput?.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement;
+        searchPosts(target.value);
+    });
+</script> 
