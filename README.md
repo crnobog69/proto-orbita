@@ -60,7 +60,7 @@
 │   │   └── code.css
 │   │
 │   └── tools
-│       ├── blog-manager.py
+│       ├── orbiter.py - блог менаџер
 │       ├── README.md
 │       ├── requirements.txt
 │       └── venv.md
