@@ -1,12 +1,12 @@
 ---
 excerpt: Персонализована скрипта за `git`
-pubDate: '2024-11-30T18:14:27.272467+00:00'
+pubDate: "2024-11-30T18:14:27.272467+00:00"
 title: 4 | cgit
 ---
 
 ## Јер ме мрзи.
 
-```c
+```bash
 #!/bin/bash
 
 # Функција за боје
@@ -46,7 +46,7 @@ push_to_all_remotes() {
     echo
     echo -e "${LAVANDER}Гурам репозиторијум:${NC} ${PEACH}$repo${NC} ${LAVANDER}на све удаљене репозиторијуме${NC}"
     cd "$repo" || exit
-    
+
     for remote in github gitlab codeberg; do
         echo -e "${YELLOW}Гурам на $remote...${NC}"
         git add .
@@ -61,7 +61,7 @@ push_to_github() {
     local repo=$1
     echo -e "${LAVANDER}Гурам репозиторијум:${NC} ${PEACH}$repo${NC} ${LAVANDER}на GitHub${NC}"
     cd "$repo" || exit
-    
+
     echo -e "${YELLOW}Гурам на github...${NC}"
     git add .
     git commit -m "❄️"
