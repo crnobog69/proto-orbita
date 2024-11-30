@@ -33,33 +33,48 @@
 │   │   ├── CrnobogButton.astro
 │   │   ├── GitHubButton.astro
 │   │   ├── LanguageSwitch.astro
+│   │   ├── ReadMoreButton.astro
 │   │   ├── SearchBar.astro
 │   │   ├── SiteLogo.astro
-│   │   └── ThemeToggle.astro
-│   │
+│   │   ├── ThemeToggle.astro
+│   │   └── Welcome.astro - Астро стартна страница
 │   │
 │   ├── content
 │   │   ├── blog
+│   │   │   └── БЛОГОВИ
 │   │   └── config.ts
 │   │
 │   ├── layouts
 │   │   ├── BlogPostLayout.astro
 │   │   └── Layout.astro
 │   │
-│   └── pages
-│       └── blog
-│           └── index.astro
+│   ├── pages
+│   │   ├── blog
+│   │   │   └── [slug].astro
+│   │   └── index.astro
+│   │
+│   ├── store
+│   │   └── language.ts
+│   │
+│   ├── styles
+│   │   └── code.css
+│   │
+│   └── tools
+│       ├── blog-manager.py
+│       ├── README.md
+│       ├── requirements.txt
+│       └── venv.md
 │
 ├── .directory
 ├── .gitignore
-├── README.md
 ├── astro.config.mjs
 ├── bun.lockb
 ├── color-pallete.txt
-├── config.ts
+├── LICENSE
 ├── package.json
 ├── push.ps1
 ├── push.sh
+├── README.md
 ├── tailwind.config.mjs
 └── tsconfig.json
 ```
